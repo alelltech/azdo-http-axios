@@ -15,7 +15,7 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
 
 > ⚠️ **We do not evaluate this javascript snippet code**, just get the `config` request data.
 
-![Insomnia](./docs/copy-from-insomnia.png)
+![Insomnia](./images/copy-from-insomnia.png)
 
 
 
