@@ -9,9 +9,16 @@ This extension provides 1 tasks!
 * Http Requests with `Axios`.
 
 
-## Basic queries syntax
-
 ## Usage sample
+
+Build your Request from `Insomnia` or `Postman` and send via `source` input.
+
+> ⚠️ **We do not evaluate this javascript snippet code**, just get the `config` request data.
+
+![Insomnia](./docs/copy-from-insomnia.png)
+
+
+
 
 ```yaml
 - job:
@@ -22,12 +29,19 @@ This extension provides 1 tasks!
     inputs:
       source: |
         ...
+        var axios = require("axios").default;
+
         var options = {
-          method: 'GET',
-          url: 'http://localhost:7007/api/catalog/entities',
-          params: {filter: ['kind=api', 'relations']},
-          headers: {'User-Agent': 'insomnia/2023.5.8'}
+          method: 'POST',
+          url: 'http://localhost:9000/apisix/admin/user/login',
+          data: {username: 'admin', password: 'admin'}
         };
+
+        axios.request(options).then(function (response) {
+          console.log(response.data);
+        }).catch(function (error) {
+          console.error(error);
+        });
         ...
 
   - task: AxiosRequest@4
