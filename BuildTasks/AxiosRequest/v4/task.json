@@ -10,7 +10,7 @@
   "version": {
     "Major": 4,
     "Minor": 2,
-    "Patch": 3
+    "Patch": 4
   },
   "instanceNameFormat": "AxiosRequest",
   "inputs": [
@@ -33,7 +33,7 @@
     },
     {
       "name": "source",
-      "label": "Source of JSON contents",
+      "label": "Source of Axios config example.",
       "required": true,
       "defaultValue": "",
       "type": "string",
@@ -41,18 +41,6 @@
       "aliases": [
         "origin",
         "src"
-      ]
-    },
-    {
-      "name": "queries",
-      "label": "Jsonpath-plus queries",
-      "required": true,
-      "defaultValue": "",
-      "type": "multiLine",
-      "helpMarkDown": "Set of queries to extract values from yaml contents: \n```\nvar NAME = .metadata.name | downcase\nvar KIND = .kind\necho .kind\nfile ./foo/bar.json  = .metadata.annotations\n```\n",
-      "aliases": [
-        "jpaths",
-        "expressions"
       ]
     }
   ],
