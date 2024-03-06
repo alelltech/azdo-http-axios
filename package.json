@@ -1,0 +1,50 @@
+{
+  "name": "http-axios-extension",
+  "version": "4.2.1",
+  "scripts": {
+    "debug": "ts-node ",
+    "new:task": "ts-node .scripts/new-task.ts",
+    "release": "standard-version -a --releaseCommitMessageFormat \"chore(release): {{currentTag}}\" ",
+    "release:full": "npm run release && npm i && git add . && git commit --reuse-message=HEAD && git push --follow-tags",
+    "clean": "git clean -fdX",
+    "each": "glob-exec --foreach \"BuildTasks/*/*/tsconfig.json\" -- $1",
+    "prepare": "npm run each -- \"npm install --prefix={{file.dir}} --no-update-notifier --no-progress --legacy-peer-deps --no-fund\"",
+    "build": "npm run each -- \"npm run compile --prefix={{file.dir}}\"",
+    "test": "npm run each -- \"npm run --prefix={{file.dir}} test\"",
+    "coverage": "npm run each -- \"npm run --prefix={{file.dir}} coverage\"",
+    "prepackage": "npm run clean && npm i && npm run build && npm run each -- \"npm i --prefix={{file.dir}} --omit=dev\"",
+    "package": "tfx extension create --root . --manifest-globs vss-extension.json",
+    "postpackage": "npm i"
+  },
+  "bugs": {
+    "url": "https://github.com/Microsoft/vso-agent-tasks/issues"
+  },
+  "devDependencies": {
+    "@types/core-js": "^2.5.8",
+    "@types/fs-extra": "^5.1.0",
+    "@types/inquirer": "^9.0.7",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "^16.18.74",
+    "@types/promise-retry": "^1.1.6",
+    "@types/q": "^1.5.8",
+    "@types/temp": "^0.9.4",
+    "@types/xmldom": "^0.1.34",
+    "@typescript-eslint/eslint-plugin": "^6.19.1",
+    "@typescript-eslint/eslint-plugin-tslint": "^6.19.1",
+    "@typescript-eslint/parser": "^6.19.1",
+    "colors": "1.4.0",
+    "cp": "0.2.0",
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-typescript": "^17.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "glob": "^7.1.0",
+    "glob-exec": "^0.1.1",
+    "inquirer": "^8.0.0",
+    "mkdirp": "3.0.1",
+    "standard-version": "^9.5.0",
+    "tfx-cli": "^0.16.0",
+    "ts-node": "10.9.2",
+    "tslint": "^6.1.3",
+    "typescript": "^4.9.5"
+  }
+}

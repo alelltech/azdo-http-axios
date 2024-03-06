@@ -1,0 +1,131 @@
+name: '[$(Date:yyyyMMdd)$(Rev:.r)]'
+
+pool:
+  vmImage: "ubuntu-latest"
+
+variables:
+  - name: System.debug
+    value: "true"
+
+stages:
+  - stage: test
+    displayName: Test and Cobertura
+    jobs:
+      - job: test
+        displayName: Test and Cobertura
+        steps:
+
+          - task: Npm@1
+            continueOnError: true
+            displayName: Npm Install root
+            inputs:
+              command: "install"
+
+          - task: Npm@1
+            displayName: Test & Coverage
+            inputs:
+              command: "custom"
+              customCommand: "run coverage"
+
+          - task: PublishTestResults@2
+            displayName: Tests Results
+            continueOnError: true
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/test-results.xml"
+              mergeResults: true
+
+          # - task: PublishCodeCoverageResults@1
+          #   displayName: Cobertura Results
+          #   inputs:
+          #     codeCoverageTool: 'Cobertura' # 'Cobertura' | 'JaCoCo'. Required. Code coverage tool. Default: JaCoCo.
+          #     summaryFileLocation: '**/cobertura-coverage.xml'
+
+          # - script: |
+          #     coverage=$(grep -Pio '<coverage.*branch-rate="\K[^"]*' ${{ task.taskFolder }}/coverage/cobertura-coverage.xml )
+          #     coverage=$(echo "$coverage * 100" | bc -l)
+          #     if (( $(echo "$coverage >= 80" | bc -l) )); then
+          #       echo "Code coverage is above 80%"
+          #       echo "##vso[task.complete result=Succeeded;]Succeeded"
+          #     else
+          #       echo "##vso[task.logissue type=error;]Code coverage is below 80%"
+          #       echo "##vso[task.complete result=Failed;]Failed"
+          #     fi
+          #   displayName: Check Coverage (${{ task.name }})
+
+
+  - stage: package
+    displayName: Pack and Publish
+    jobs:
+      - job: package
+        displayName: Pack and Publish
+        steps:
+          - task: TfxInstaller@4
+            inputs:
+              version: "0.x"
+
+          - task: Npm@1
+            continueOnError: true
+            displayName: Npm Install root
+            inputs:
+              command: "install"
+
+          - task: Npm@1
+            displayName: Packing all
+            inputs:
+              command: "custom"
+              customCommand: "run package"
+
+          - bash: |
+              VERSION=$(cat package.json | grep "\"version\":" | cut -d '"' -f4)
+              echo "##vso[task.setvariable variable=VERSION;isOutput=true]$VERSION"
+
+            name: packageInfo
+
+          # - task: PackageAzureDevOpsExtension@4
+          #   inputs:
+          #     rootFolder: '$(System.DefaultWorkingDirectory)/package'
+          #     patternManifest: 'vss-extensions.json'
+          #     publisherId: '$(PublisherID)'
+          #     extensionId: '$(ExtensionID)'
+          #     extensionName: '$(ExtensionName)'
+          #     extensionVersion: '$(packageInfo.VERSION)'
+          #     updateTasksVersion: true
+          #     updateTasksVersionType: 'patch'
+          #     extensionVisibility: 'private'
+          #     extensionPricing: 'free'
+
+          - task: CopyFiles@2
+            displayName: "Copy Files to: $(Build.ArtifactStagingDirectory)"
+            inputs:
+              Contents: "**/*$(packageInfo.VERSION).vsix"
+              TargetFolder: "$(Build.ArtifactStagingDirectory)"
+
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: "$(Build.ArtifactStagingDirectory)"
+              ArtifactName: "$(ArtifactName)"
+              publishLocation: "Container"
+
+
+          - task: PublishAzureDevOpsExtension@4
+            inputs:
+              connectTo: 'VsTeam'
+              connectedServiceName: 'Visual Studio Marketplace (DevOps)'
+              fileType: 'vsix'
+              vsixFile: '$(Build.ArtifactStagingDirectory)/*$(packageInfo.VERSION).vsix'
+              # publisherId: '$(PublisherID)'
+              # extensionId: '$(ExtensionID)'
+              # extensionName: '$(ExtensionName)'
+              extensionVersion: '$(packageInfo.VERSION)'
+              # extensionVisibility: 'private'
+              extensionPricing: 'free'
+
+          # - task: InstallAzureDevOpsExtension@4
+          #   inputs:
+          #     connectTo: 'VsTeam'
+          #     connectedServiceName: 'Visual Studio Marketplace (DevOps)'
+          #     method: 'id'
+          #     publisherId: '$(PublisherID)'
+          #     extensionId: '$(ExtensionID)'
+

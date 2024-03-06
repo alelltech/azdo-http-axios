@@ -1,0 +1,64 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+  "id": "ecd2cb7a-96ef-43e3-8985-0961ddcd1370",
+  "name": "HttpAxiosRequest",
+  "friendlyName": "AxiosRequest",
+  "description": "AxiosRequest",
+  "helpMarkDown": "",
+  "category": "Utility",
+  "author": "alelltech",
+  "version": {
+    "Major": 4,
+    "Minor": 2,
+    "Patch": 1
+  },
+  "instanceNameFormat": "AxiosRequest",
+  "inputs": [
+    {
+      "name": "sourceType",
+      "label": "Type of source input",
+      "required": true,
+      "defaultValue": "file",
+      "type": "pickList",
+      "options": {
+        "file": "file",
+        "var": "var",
+        "text": "text"
+      },
+      "helpMarkDown": "",
+      "aliases": [
+        "type",
+        "kind"
+      ]
+    },
+    {
+      "name": "source",
+      "label": "Source of JSON contents",
+      "required": true,
+      "defaultValue": "",
+      "type": "string",
+      "helpMarkDown": "",
+      "aliases": [
+        "origin",
+        "src"
+      ]
+    },
+    {
+      "name": "queries",
+      "label": "Jsonpath-plus queries",
+      "required": true,
+      "defaultValue": "",
+      "type": "multiLine",
+      "helpMarkDown": "Set of queries to extract values from yaml contents: \n```\nvar NAME = .metadata.name | downcase\nvar KIND = .kind\necho .kind\nfile ./foo/bar.json  = .metadata.annotations\n```\n",
+      "aliases": [
+        "jpaths",
+        "expressions"
+      ]
+    }
+  ],
+  "execution": {
+    "Node16": {
+      "target": "AxiosRequest/v4/AxiosRequest.js"
+    }
+  }
+}

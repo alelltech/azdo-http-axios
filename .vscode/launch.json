@@ -1,0 +1,60 @@
+{
+  // Use IntelliSense to learn about possible attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "🐛 Debug Root",
+      "request": "launch",
+      "cwd": "${fileDirname}",
+      "runtimeArgs": [
+        "run",
+        "debug",
+        "${file}"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "console": "integratedTerminal",
+      "env": {
+      }
+    },
+    {
+      "name": "🧪 Debug Test",
+      "request": "launch",
+      "cwd": "${fileDirname}/../",
+      "runtimeArgs": [
+        "run-script",
+        "debug:test",
+        "${file}"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "🚀 Debug Task",
+      "request": "launch",
+      "cwd": "${fileDirname}",
+      "runtimeArgs": [
+        "run",
+        "debug",
+        "${file}"
+      ],
+      "runtimeExecutable": "npm",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node",
+      "console": "integratedTerminal",
+      "env": {
+      }
+    }
+  ]
+}

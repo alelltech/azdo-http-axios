@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json.schemastore.org/vss-extension.json",
+  "manifestVersion": 1,
+  "id": "http-axios",
+  "version": "4.2.1",
+  "name": "Not Only Yaml parse utility",
+  "description": "Parse, Query and Extract data from YAML, XML and JSON files",
+  "publisher": "alelltech",
+  "public": true,
+  "targets": [
+    {
+      "id": "Microsoft.VisualStudio.Services"
+    }
+  ],
+  "categories": [
+    "Azure Pipelines"
+  ],
+  "icons": {
+    "default": "images/vss.png"
+  },
+  "screenshots": [],
+  "content": {
+    "details": {
+      "path": "README.md"
+    },
+    "license": {
+      "path": "LICENSE"
+    }
+  },
+  "links": {
+    "support": {
+      "uri": "https://github.com/alelltech/azdo-http-axios/issues"
+    }
+  },
+  "repository": {
+    "type": "git",
+    "uri": "https://github.com/alelltech/azdo-http-axios"
+  },
+  "tags": [
+    "java",
+    "azure devops",
+    "pipeline",
+    "task"
+  ],
+  "files": [
+    {
+      "path": "BuildTasks/AxiosRequest"
+    },
+    {
+      "path": "images",
+      "addressable": true
+    }
+  ],
+  "contributions": [
+    {
+      "id": "HttpAxiosRequest",
+      "type": "ms.vss-distributed-task.task",
+      "targets": [
+        "ms.vss-distributed-task.tasks"
+      ],
+      "properties": {
+        "name": "BuildTasks/AxiosRequest"
+      }
+    }
+  ]
+}
