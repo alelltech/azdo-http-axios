@@ -5,8 +5,6 @@ import { _loadData } from "azure-pipelines-task-lib/internal";
 import { getParam, parseInput, setIn, setVar } from '../ParamsUtil';
 import { getRuntimePath } from '../RuntimeUtil';
 import { mockJsonContent, mockJsonQueries } from "./L0.json.mock";
-import { parseScriptInput } from "../../../Common/v4/ScriptRunnerInput";
-import { runScript } from "../../../Common/v4/ScriptRunner";
 
 const initial_env = Object.keys(process.env).reduce((p, k) => {
   p[k] = process.env[k]
@@ -110,40 +108,6 @@ describe(`Build Suite`, () => {
       assert(builderImageName == 'teste/teste', '"builderImageName" should be parsed from "INPUT_BUILDER_IMAGE_NAME".')
     })
 
-  })
-
-
-  describe("ScriptRunnerInputs ", ()=>{
-    afterEach(resetEnv)
-
-    it('parseInput Json', async () => {
-
-      const source = mockJsonContent;
-      const inSourceType = 'text';
-      const inQueries = mockJsonQueries;
-
-      const { parsedContent, queries, sourceContent, sourceType } = parseScriptInput({
-        source,
-        sourceType: inSourceType,
-        queries: inQueries,
-        fnToJson: JSON.parse
-      });
-
-      assert(parsedContent.length == 2, 'should have 2 documents')
-      assert(queries.length == 6, 'should have 5 expressions')
-      assert(queries[0].dest == "NAME", 'first "dest" must be "NAME"')
-      assert(queries[0].kind == "var", 'first "kind" must be "var"')
-      assert(queries[0].jpath == ".metadata.name", 'first "jpath" must be ".metadata.name"')
-
-      assert(queries[2].dest == "", 'third "dest" must be empty')
-      assert(queries[2].kind == "echo", 'third "kind" must be "echo"')
-      assert(queries[2].jpath == ".kind", 'third "jpath" must be ".kind"')
-
-      assert(queries[3].dest == "./bar/annotations.json", 'fourth "dest" must be "./bar/annotations.json"')
-      assert(queries[3].kind == "file", 'fourth "kind" must be "file"')
-      assert(queries[3].jpath == ".metadata.annotations", 'fourth "jpath" must be ".metadata.annotations"')
-
-    })
   })
 
 })

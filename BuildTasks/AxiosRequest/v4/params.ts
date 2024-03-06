@@ -1,31 +1,23 @@
-import { BuildVariables, variablesMap } from "../../Common/v4/BuiltInVariables"
+import { AxiosRequestConfig } from "axios";
 import { getInput, getVariable } from "azure-pipelines-task-lib";
 import { _getVariableKey, _loadData, _warning } from "azure-pipelines-task-lib/internal";
 import { readFileSync } from "fs";
-import { loadAll } from "js-yaml";
 
 export type SourceType = 'file' | 'text' | 'variable';
 export interface Inputs {
   sourceType: SourceType
-  source: string // catalog-info.y*ml
-  queries: string // 'VAR_NAME=$..field\nVAR_SEC=$..field2'
+  source: string
 }
 
 export type QueryKind = 'var' | 'file' | 'echo';
 
 export type InputsParsed = {
-  sourceType: SourceType
-  sourceContent: string // catalog-info.y*ml
-  parsedContent: Array<any>
-  queries: Array<{ kind: QueryKind, dest: string, jpath: string, pipes: string[] }>
+  config: AxiosRequestConfig
 }
 
 export const defaultsParams: Partial<Inputs> = {
   sourceType: 'file',
-  source: 'catalog-info.y*ml',
-  queries: 'VAR_NAME=$[0].field1'
-  // extractTemplate: string // '{{basename}}[documentIndex].{{parent}}.{{name}}'
-  // customExtractions: string
+  source: 'var options = { };',
 }
 
 export const contentHandleMap: Record<SourceType, (source: string) => string> = {
@@ -44,28 +36,24 @@ export function parseInput(): InputsParsed {
     _warning(`Source Type '${sourceType}' is not implemented, using default 'text'.`);
   }
 
-  const parsedContent = JSON.parse(getContent(sourceContent));
-  const result: InputsParsed = {queries: [], sourceContent, parsedContent, sourceType: sourceType as any }
+  const content = getContent(sourceContent);
 
-  const queries = getInput('queries', true) ?? '';
+  const configRaw = /[var|let] [options|config] = (\{[^;]+\});/gm.exec(content);
 
-  const regex = /(((var|file) {1,}([^=]+)=([^\|\n]+))|((echo) {1,}([^\|\n]+)))( {0,}\| {0,}([^\n]+))?/gm
+  let config = {};
 
-  let m;
+  if(configRaw && configRaw[1]){
+    config = eval(`(() => {
 
-  while ((m = regex.exec(queries)) !== null) {
-    const kind = (m[3] ?? m[7]).trim()
-    const dest: string = (m[4] ?? '').trim()
-    const jpath: string = (m[5] ?? m[8]).trim()
-    const pipes: string = (m[9] ?? m[10] ?? '').trim()
+      return ${configRaw[1]};
 
-    result.queries.push({
-      kind,
-      dest,
-      pipes: pipes.split('|').map((p) => p.trim()),
-      jpath
-    })
+    })`)()
   }
+  if(!config){
+    throw new Error(`AxiosRequest options was not found on 'source' parameter.`)
+  }
+
+  const result: InputsParsed = { config }
 
   return result;
 }
