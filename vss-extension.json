@@ -2,9 +2,9 @@
   "$schema": "https://json.schemastore.org/vss-extension.json",
   "manifestVersion": 1,
   "id": "http-axios",
-  "version": "4.2.2",
-  "name": "Not Only Yaml parse utility",
-  "description": "Parse, Query and Extract data from YAML, XML and JSON files",
+  "version": "4.2.3",
+  "name": "Not Only Axios Request",
+  "description": "Http Request from some libs like Axios",
   "publisher": "alelltech",
   "public": true,
   "targets": [

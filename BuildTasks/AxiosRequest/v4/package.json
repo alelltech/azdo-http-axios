@@ -1,6 +1,6 @@
 {
   "name": "http-axios-extension-request",
-  "version": "4.2.2",
+  "version": "4.2.3",
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "tsc",
@@ -32,7 +32,7 @@
     "mkdirp": "3.0.1",
     "cp": "0.2.0",
     "rimraf": "5.0.5",
-    "glob": "10.3.10",
+    "glob": "^7.1.0",
     "rm": "0.1.8"
   }
 }
