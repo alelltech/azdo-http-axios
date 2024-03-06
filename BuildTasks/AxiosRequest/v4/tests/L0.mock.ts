@@ -4,7 +4,7 @@ import { join as joinPath } from 'node:path';
 
 export const mockInsomnia = (() => {
   try {
-    return readFileSync(joinPath(__dirname, 'mocks', 'L0.source.insomnia.js')).toString('utf-8');
+    return readFileSync(joinPath(__dirname, 'mocks', 'L0.source.insomnia')).toString('utf-8');
   } catch (error) {
     console.error(error);
   }
@@ -12,7 +12,7 @@ export const mockInsomnia = (() => {
 
 export const mockPostman = (() => {
   try {
-    return readFileSync(joinPath(__dirname, 'mocks', 'L0.source.postman.js')).toString('utf-8');
+    return readFileSync(joinPath(__dirname, 'mocks', 'L0.source.postman')).toString('utf-8');
   } catch (error) {
     console.error(error);
   }

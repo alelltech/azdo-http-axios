@@ -5,11 +5,11 @@ import {
   setVariable,
 } from 'azure-pipelines-task-lib/task';
 import axios from 'axios';
-
+import { isCommon } from '../../Common/v4/Common'
 
 async function run() {
   try {
-
+    console.log(isCommon);
     const source = getInput('source', true);
     const options = /[var|let] [options|config] = (\{[^;]+\});/gm.exec(source);
 
