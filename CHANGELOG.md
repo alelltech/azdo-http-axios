@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [4.2.8](https://github.com/alelltech/azdo-http-axios/compare/v4.2.7...v4.2.8) (2024-04-05)
+
+
+### Others
+
+* **release:** 4.2.7 ([03fd8b4](https://github.com/alelltech/azdo-http-axios/commit/03fd8b45a7a70d27abda14a9e539c34e44a182b2))
+
 ### [4.2.7](https://github.com/alelltech/azdo-http-axios/compare/v4.2.6...v4.2.7) (2024-03-19)
 
 
