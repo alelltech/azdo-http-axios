@@ -25,8 +25,10 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
   ...
   steps:
   - task: AxiosRequest@4
+    name: insomnia
     displayName: "Axios Request from Insomnia"
     inputs:
+      variablePrefix: INSOMNIA_RES_
       source: |
         ...
         var axios = require("axios").default;
@@ -43,6 +45,11 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
           console.error(error);
         });
         ...
+  - script: |
+      echo "Log task output variable:"
+      echo $(insomnia.body)
+      echo "Log shared variable with custom prpefix:"
+      echo $(INSOMNIA_RES_BODY)
 
   - task: AxiosRequest@4
     displayName: "Axios Request from Postman"

@@ -7,6 +7,7 @@ import { EXT } from '../../../Common/v4/RuntimeUtil';
 import { mockAxios, mockInsomnia } from './L0.mock';
 
 setIn({
+  variablePrefix: 'INSOMNIA_RES_',
   source: mockInsomnia,
   sourceType: 'text'
 })

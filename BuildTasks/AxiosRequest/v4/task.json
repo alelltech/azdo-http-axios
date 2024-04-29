@@ -42,6 +42,14 @@
         "origin",
         "src"
       ]
+    },
+    {
+      "name": "variablePrefix",
+      "label": "Variable prefix for output variable set, like BODY, STATUS, STATUSTEXT and HEADERS.",
+      "required": true,
+      "defaultValue": "RESPONSE_",
+      "type": "string",
+      "helpMarkDown": "Variable prefix for output variable set, default is RESPONSE_BODY, RESPONSE_STATUS, RESPONSE_STATUSTEXT and RESPONSE_HEADERS."
     }
   ],
   "execution": {

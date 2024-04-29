@@ -3,13 +3,10 @@ import { getInput, getVariable } from "azure-pipelines-task-lib";
 import { _getVariableKey, _loadData, _warning } from "azure-pipelines-task-lib/internal";
 import { readFileSync } from "fs";
 
-export type SourceType = 'file' | 'text' | 'variable';
 export interface Inputs {
   sourceType: SourceType
   source: string
 }
-
-export type QueryKind = 'var' | 'file' | 'echo';
 
 export type InputsParsed = {
   config: AxiosRequestConfig
@@ -20,11 +17,6 @@ export const defaultsParams: Partial<Inputs> = {
   source: 'var options = { };',
 }
 
-export const contentHandleMap: Record<SourceType, (source: string) => string> = {
-  'file': (file) => readFileSync(file).toString('utf-8'),
-  'variable': (varname) => getVariable(varname) ?? '',
-  'text': (content) => content
-}
 
 export function parseInput(): InputsParsed {
   const source: SourceType = getInput('source', true) as any

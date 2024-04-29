@@ -39,6 +39,7 @@ describe(`AxiosRequest Suite`, () => {
     assert(runner.stdout.match(/##vso\[task.setvariable variable=status[^\]]+\]200/), "should have setvariable expression of 'status' with '200'.")
     assert(runner.stdout.match(/##vso\[task.setvariable variable=statusText[^\]]+\]OK/), "should have setvariable expression of 'statusText' with 'OK'.")
     assert(runner.stdout.match(/##vso\[task.setvariable variable=headers[^\]]+\]{}/), "should have setvariable expression of 'headers' with '{}'.")
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=INSOMNIA_RES_BODY[^\]]+\]{\"mockfield\": \"mock value\"}/), "should have setvariable expression of 'INSOMNIA_RES_BODY' with '{\"mockfield\": \"mock value\"}'.")
   });
 
   it("L0 evaluate postman request", async function () {
