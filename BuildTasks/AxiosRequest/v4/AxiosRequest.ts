@@ -8,7 +8,6 @@ import {
 import axios from 'axios';
 import { isCommon } from '../../Common/v4/Common'
 import { SourceType, getContent } from '../../Common/v4/SourceContent'
-import { parseInput } from "./params";
 async function run() {
   try {
     console.log(isCommon);
