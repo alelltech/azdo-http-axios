@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [4.3.0](https://github.com/alelltech/azdo-http-axios/compare/v4.2.8...v4.3.0) (2024-04-29)
+
+
+### Features
+
+* improves sharet out vars with prefix ([20e1c6c](https://github.com/alelltech/azdo-http-axios/commit/20e1c6c8505cb4e879177dfa649845a829d1fd30))
+
+
+### Others
+
+* **release:** 4.2.8 ([79182ed](https://github.com/alelltech/azdo-http-axios/commit/79182ed68674c38e41813d287d91550ee271838c))
+
 ### [4.2.8](https://github.com/alelltech/azdo-http-axios/compare/v4.2.7...v4.2.8) (2024-04-05)
 
 
