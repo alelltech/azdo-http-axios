@@ -1,6 +1,6 @@
 {
   "name": "http-extension-axios",
-  "version": "4.3.2",
+  "version": "5.0.0",
   "scripts": {
     "clean": "tsc --build --clean",
     "compile": "tsc",
