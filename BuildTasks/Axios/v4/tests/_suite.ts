@@ -7,7 +7,7 @@ import { EXT, getRuntimePath } from "../../../Common/v4/RuntimeUtil";
 
 
 
-describe(`AxiosRequest Suite`, () => {
+describe(`Axios Suite`, () => {
   const tempDir = path.join(__dirname, '_temp');
   beforeEach(() => {
     // Mock temp paths

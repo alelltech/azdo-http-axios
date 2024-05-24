@@ -8,6 +8,7 @@ import {
 import axios from 'axios';
 import { isCommon } from '../../Common/v4/Common'
 import { SourceType, getContent } from '../../Common/v4/SourceContent'
+import { _debug } from 'azure-pipelines-task-lib/internal';
 async function run() {
   try {
     console.log(isCommon);
@@ -17,11 +18,13 @@ async function run() {
 
     const content = await getContent(sourceType as SourceType, source);
 
-    const configRaw = /[var|let] [options|config] = (\{[^;]+\});/gm.exec(content);
+    const configRaw = /[var|let]+ [options|config]+ = (\{[^;]+\});/gm.exec(content);
+
 
     let config = {};
 
     if(configRaw && configRaw[1]){
+      _debug(configRaw[1]);
       config = eval(`(() => {
 
         return ${configRaw[1]};
@@ -30,9 +33,10 @@ async function run() {
     }
 
     if(!config){
-      throw new Error(`AxiosRequest options was not found on 'source' parameter.`)
+      throw new Error(`Axios options was not found on 'source' parameter.`)
     }
 
+    console.log(config);
     const result = await axios.request({
       ...config,
       transformResponse: x => x
@@ -51,6 +55,8 @@ async function run() {
   }
   catch (err: any) {
     setResult(TaskResult.Failed, err.message);
+    // _debug(err);
+    console.debug(err?.response?.data);
   }
 }
 

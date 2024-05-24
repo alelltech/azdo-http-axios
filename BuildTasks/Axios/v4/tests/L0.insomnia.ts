@@ -14,7 +14,7 @@ setIn({
 
 _loadData();
 
-let taskPath = joinPath(__dirname, '..', `AxiosRequest.${EXT}`);
+let taskPath = joinPath(__dirname, '..', `Axios.${EXT}`);
 let runner: TaskMockRunner = new TaskMockRunner(taskPath);
 
 runner.registerMock('axios', mockAxios);

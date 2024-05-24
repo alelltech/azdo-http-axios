@@ -5,6 +5,6 @@
       "sourceRoot": "./"
   },
   "files": [
-    "AxiosRequest.ts"
+    "Axios.ts"
   ]
 }

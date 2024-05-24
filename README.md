@@ -2,7 +2,7 @@
 
 This extension provides 1 tasks!
 
-* `AxiosRequest`
+* `Axios`
 
 ## Features
 
@@ -24,7 +24,7 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
 - job:
   ...
   steps:
-  - task: AxiosRequest@4
+  - task: Axios@4
     name: insomnia
     displayName: "Axios Request from Insomnia"
     inputs:
@@ -51,7 +51,7 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
       echo "Log shared variable with custom prpefix:"
       echo $(INSOMNIA_RES_BODY)
 
-  - task: AxiosRequest@4
+  - task: Axios@4
     displayName: "Axios Request from Postman"
     inputs:
       source: |

@@ -17,8 +17,8 @@ module.exports = {
     { "filename": "package.json", "type": "json" },
     { "filename": "vss-extension.json", "type": "json" },
 
-    { "filename": "BuildTasks/AxiosRequest/v4/package.json", "type": "json" },
-    { "filename": "BuildTasks/AxiosRequest/v4/task.json", "updater": "task-version.js" },
+    { "filename": "BuildTasks/Axios/v5/package.json", "type": "json" },
+    { "filename": "BuildTasks/Axios/v5/task.json", "updater": "task-version.js" },
 
   ]
 }

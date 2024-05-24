@@ -1,9 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
   "id": "ecd2cb7a-96ef-43e3-8985-0961ddcd1370",
-  "name": "HttpAxiosRequest",
-  "friendlyName": "AxiosRequest",
-  "description": "AxiosRequest",
+  "name": "Axios",
+  "friendlyName": "Axios",
+  "description": "Axios",
   "helpMarkDown": "",
   "category": "Utility",
   "author": "alelltech",
@@ -12,7 +12,7 @@
     "Minor": 3,
     "Patch": 1
   },
-  "instanceNameFormat": "AxiosRequest",
+  "instanceNameFormat": "Axios",
   "inputs": [
     {
       "name": "sourceType",
@@ -54,7 +54,7 @@
   ],
   "execution": {
     "Node16": {
-      "target": "AxiosRequest/v4/AxiosRequest.js"
+      "target": "Axios/v4/Axios.js"
     }
   }
 }

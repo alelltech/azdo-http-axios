@@ -4,16 +4,17 @@ import { TaskMockRunner } from 'azure-pipelines-task-lib/mock-run';
 import { join as joinPath } from 'node:path';
 import { setIn } from '../../../Common/v4/ParamsUtil';
 import { EXT } from '../../../Common/v4/RuntimeUtil';
-import { mockAxios, mockPostman } from './L0.mock';
+import { mockAxios, mockInsomnia } from './L0.mock';
 
 setIn({
-  source: mockPostman,
+  variablePrefix: 'INSOMNIA_RES_',
+  source: mockInsomnia,
   sourceType: 'text'
 })
 
 _loadData();
 
-let taskPath = joinPath(__dirname, '..', `AxiosRequest.${EXT}`);
+let taskPath = joinPath(__dirname, '..', `Axios.${EXT}`);
 let runner: TaskMockRunner = new TaskMockRunner(taskPath);
 
 runner.registerMock('axios', mockAxios);

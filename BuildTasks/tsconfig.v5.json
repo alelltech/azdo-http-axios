@@ -1,0 +1,18 @@
+{
+  "compileOnSave": true,
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    // "strict": true,
+    "strictNullChecks": false,
+    "removeComments": true,
+    "forceConsistentCasingInFileNames": true
+  },
+  "files": [
+    "./Common/v4/Common.ts",
+    "./Common/v4/ParamsUtil.ts",
+    "./Common/v4/RuntimeUtil.ts",
+    "./Common/v4/TaskLibUtils.ts"
+  ]
+}
