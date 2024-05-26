@@ -1,9 +1,9 @@
 {
   "$schema": "https://json.schemastore.org/vss-extension.json",
   "manifestVersion": 1,
-  "id": "http-axios",
-  "version": "5.0.1",
-  "name": "Not Only Axios Request",
+  "id": "axios-http-request",
+  "version": "5.0.2",
+  "name": "Axios Http Request",
   "description": "Http Request from some libs like Axios",
   "publisher": "alelltech",
   "public": true,
@@ -53,7 +53,7 @@
   ],
   "contributions": [
     {
-      "id": "HttpAxios",
+      "id": "Axios",
       "type": "ms.vss-distributed-task.task",
       "targets": [
         "ms.vss-distributed-task.tasks"

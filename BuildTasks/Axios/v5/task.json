@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
-  "id": "ecd2cb7a-96ef-43e3-8985-0961ddcd1370",
+  "id": "faf82a68-208a-46a5-a7ae-f6f56ee77b18",
   "name": "Axios",
   "friendlyName": "Axios",
   "description": "Axios",
@@ -10,7 +10,7 @@
   "version": {
     "Major": 5,
     "Minor": 0,
-    "Patch": 1
+    "Patch": 2
   },
   "instanceNameFormat": "Axios",
   "inputs": [
