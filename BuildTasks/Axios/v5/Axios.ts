@@ -6,8 +6,8 @@ import {
   setVariable,
 } from 'azure-pipelines-task-lib/task';
 import axios from 'axios';
-import { isCommon } from '../../Common/v4/Common'
-import { SourceType, getContent } from '../../Common/v4/SourceContent'
+import { isCommon } from '../../Common/v5/Common'
+import { SourceType, getContent } from '../../Common/v5/SourceContent'
 import { _debug } from 'azure-pipelines-task-lib/internal';
 async function run() {
   try {

@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { MockTestRunner } from "azure-pipelines-task-lib/mock-test";
 import { mkdirSync, rmSync } from "fs";
-import { EXT, getRuntimePath } from "../../../Common/v4/RuntimeUtil";
+import { EXT, getRuntimePath } from "../../../Common/v5/RuntimeUtil";
 
 
 
