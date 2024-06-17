@@ -10,7 +10,7 @@
   "version": {
     "Major": 5,
     "Minor": 1,
-    "Patch": 2
+    "Patch": 3
   },
   "instanceNameFormat": "Axios",
   "inputs": [
@@ -52,32 +52,32 @@
       "helpMarkDown": "Variable prefix for output variable set, default is RESPONSE_BODY, RESPONSE_STATUS, RESPONSE_STATUSTEXT and RESPONSE_HEADERS."
     },
     {
-      "name": "poolingRetries",
-      "label": "Number of poolingRetries",
+      "name": "pollingRetries",
+      "label": "Number of pollingRetries",
       "required": false,
       "defaultValue": "0",
       "type": "int",
-      "helpMarkDown": "Number of `pooling Retries` for non valid responses.\n> Set to `0` **if NO want pooling**.\nSee [Activating Pooling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-pooling)"
+      "helpMarkDown": "Number of `polling Retries` for non valid responses.\n> Set to `0` **if NO want polling**.\nSee [Activating Polling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-polling)"
     },
     {
-      "name": "poolingUntil",
-      "label": "Pooling expression",
+      "name": "pollingUntil",
+      "label": "Polling expression",
       "required": false,
       "defaultValue": "0",
       "type": "string",
-      "helpMarkDown": "ECMAScript pooling expression to stop pooling.\n> Set to `empty` **if NO want pooling**.\nSee [Activating Pooling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-pooling)",
+      "helpMarkDown": "ECMAScript polling expression to stop polling.\n> Set to `empty` **if NO want polling**.\nSee [Activating Polling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-polling)",
       "properties": {
         "rows": "4",
         "resizable": true
       }
     },
     {
-      "name": "poolingDelay",
-      "label": "Pooling delay in milis",
+      "name": "pollingDelay",
+      "label": "Polling delay in milis",
       "required": true,
       "defaultValue": "0",
       "type": "int",
-      "helpMarkDown": "Delay in milis for pooling interval."
+      "helpMarkDown": "Delay in milis for polling interval."
     }
   ],
   "execution": {

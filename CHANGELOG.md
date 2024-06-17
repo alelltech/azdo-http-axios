@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [5.1.3](https://github.com/alelltech/azdo-http-axios/compare/v5.1.2...v5.1.3) (2024-06-17)
+
+
+### Others
+
+* **release:** 5.1.2 ([5a370af](https://github.com/alelltech/azdo-http-axios/commit/5a370af876b41aea4bf8ff803c02da53e832a52a))
+
 ### [5.1.2](https://github.com/alelltech/azdo-http-axios/compare/v5.1.1...v5.1.2) (2024-06-17)
 
 
@@ -21,7 +28,7 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### Features
 
-* pooling ([e8d5be4](https://github.com/alelltech/azdo-http-axios/commit/e8d5be43dc26c735fdab9724ff5f8b8b5993964e))
+* polling ([e8d5be4](https://github.com/alelltech/azdo-http-axios/commit/e8d5be43dc26c735fdab9724ff5f8b8b5993964e))
 
 
 ### Others
