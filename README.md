@@ -28,22 +28,19 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
     name: insomnia
     displayName: "Axios Request from Insomnia"
     inputs:
+      poolingRetries: 2
+      poolingDelay: 500
+      poolingUntil: |
+        jq('.body.data..foo.bar')[0] === 'good_value'
       variablePrefix: INSOMNIA_RES_
       source: |
         ...
-        var axios = require("axios").default;
-
         var options = {
           method: 'POST',
-          url: 'http://localhost:9000/apisix/admin/user/login',
-          data: {username: 'admin', password: 'admin'}
+          url: 'https://mydomain.com/foo/bar',
+          data: {foo: {bar: 'request_value'}}
         };
 
-        axios.request(options).then(function (response) {
-          console.log(response.data);
-        }).catch(function (error) {
-          console.error(error);
-        });
         ...
   - script: |
       echo "Log task output variable:"

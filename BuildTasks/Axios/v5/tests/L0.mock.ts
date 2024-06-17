@@ -1,4 +1,4 @@
-import { AxiosStatic } from 'axios';
+import axios, {AxiosStatic} from 'axios';
 import { readFileSync } from 'node:fs';
 import { join as joinPath } from 'node:path';
 
@@ -24,6 +24,44 @@ export const mockAxios = {
       return Promise.resolve({
         config,
         data: '{"mockfield": "mock value"}',
+        headers: {},
+        status: 200,
+        statusText: 'OK',
+        request: {}
+      } as any)
+    }
+  } as Pick<AxiosStatic, 'request'>
+}
+
+export const mockAxiosRetryAways = {
+  default: {
+    request(config) {
+      return Promise.resolve({
+        config,
+        data: '{"mockfield": "mock value"}',
+        headers: {},
+        status: 500,
+        statusText: 'OK',
+        request: {}
+      } as any)
+    }
+  } as Pick<AxiosStatic, 'request'>
+}
+
+export const mockAxiosRetryCustomJq = {
+  default: {
+    ...axios,
+
+    // interceptors: {
+    //   request: {
+    //     use: () => {}
+    //   }
+    // },
+
+    request(config) {
+      return Promise.resolve({
+        config,
+        data: JSON.stringify({data: [{ foo: {bar: 'bad_value'}}]}),
         headers: {},
         status: 200,
         statusText: 'OK',

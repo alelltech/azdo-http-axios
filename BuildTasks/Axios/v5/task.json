@@ -50,6 +50,30 @@
       "defaultValue": "RESPONSE_",
       "type": "string",
       "helpMarkDown": "Variable prefix for output variable set, default is RESPONSE_BODY, RESPONSE_STATUS, RESPONSE_STATUSTEXT and RESPONSE_HEADERS."
+    },
+    {
+      "name": "poolingRetries",
+      "label": "Number of poolingRetries",
+      "required": false,
+      "defaultValue": "0",
+      "type": "int",
+      "helpMarkDown": "# Activate pooling\nNumber of `pooling Retries` for non valid responses.\n> Set to `0` **if NO want pooling**."
+    },
+    {
+      "name": "poolingUntil",
+      "label": "Pooling expression",
+      "required": false,
+      "defaultValue": "0",
+      "type": "string",
+      "helpMarkDown": "# Activate pooling\nECMAScript pooling expression to stop pooling.\n> Set to `empty` **if NO want pooling**."
+    },
+    {
+      "name": "poolingDelay",
+      "label": "Pooling delay in milis",
+      "required": true,
+      "defaultValue": "0",
+      "type": "int",
+      "helpMarkDown": "Delay in milis for pooling interval."
     }
   ],
   "execution": {

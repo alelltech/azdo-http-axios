@@ -5,55 +5,152 @@ import {
   setResult,
   setVariable,
 } from 'azure-pipelines-task-lib/task';
-import axios from 'axios';
-import { isCommon } from '../../Common/v5/Common'
-import { SourceType, getContent } from '../../Common/v5/SourceContent'
+import axios, { Axios, AxiosResponse } from 'axios';
+import { isCommon as _isCommon } from '../../Common/v5/Common'
+import { SourceType, getContent } from '@alell/azure-pipelines-task-commons'
 import { _debug } from 'azure-pipelines-task-lib/internal';
+import axiosRetry from 'axios-retry';
+import * as safeEval from 'safe-eval';
+import { JSONPath } from 'jsonpath-plus'
+import * as yaml from 'js-yaml'
+import { xml2js } from 'xml-js';
+import { fixQuery } from '@alell/jsonpath-plus-q';
+
+function safePath(path: string ) {
+
+}
+
+function sleep(millis: any) {
+    return new Promise<void>(function (resolve, _reject) {
+        setTimeout(function () { resolve(); }, millis);
+    });
+}
+
+function validateResponse(res: AxiosResponse, poolingUntil: string) {
+
+  const {
+    data: dataRaw,
+    headers,
+    status,
+    statusText,
+    request,
+    config
+  } = res;
+
+  const values = {
+    dataRaw,
+    bodyRaw: dataRaw,
+    headers,
+    status,
+    statusText,
+    request,
+    config,
+  };
+
+  const fn = {
+    jq: (path: string, json?: string) => {
+      const bodyParsed = JSON.parse(json || dataRaw);
+
+      const results = JSONPath({
+        flatten: true,
+        autostart: true,
+        json: {...values, body: bodyParsed, data: bodyParsed},
+        path: fixQuery(path)
+      });
+      return results;
+    },
+    yq: (path: string, yml?: string) => {
+      const bodyParsed = yaml.loadAll(yml || dataRaw);
+      return JSONPath({
+        flatten: true,
+        autostart: true,
+        json: {...values, body: bodyParsed, data: bodyParsed},
+        path: fixQuery(path)
+      })
+    },
+    xq: (path: string, xml?: string) => {
+      const bodyParsed = xml2js(xml || dataRaw, { compact: true });
+      return JSONPath({
+        flatten: true,
+        autostart: true,
+        json: {...values, body: bodyParsed, data: bodyParsed},
+        path: fixQuery(path)
+      })
+    },
+  }
+  const result = safeEval(poolingUntil, {
+    ...values,
+    ...fn
+  });
+  return result;
+}
+
 async function run() {
   try {
-    console.log(isCommon);
-    const outPrefix = getInput('variablePrefix', false) || 'RESPONSE_'
-    const source: SourceType = getInput('source', true) as any
-    const sourceType = getInput('sourceType', true) ?? ''
 
+    const outPrefix = getInput('variablePrefix', false) || 'RESPONSE_';
+    const source: SourceType = getInput('source', true) as any
+    const sourceType = getInput('sourceType', true) ?? '';
     const content = await getContent(sourceType as SourceType, source);
 
+    const poolingRetries = Number(getInput('poolingRetries', false) ?? '3');
+    const poolingUntil = (getInput('poolingUntil', false) as string || '');
+    const poolingDelay = Number(getInput('poolingDelay', false) as string || '100');
+
     const configRaw = /[var|let]+ [options|config]+ = (\{[^;]+\});/gm.exec(content);
-
-
     let config = {};
-
     if(configRaw && configRaw[1]){
       _debug(configRaw[1]);
-      config = eval(`(() => {
-
+      config = safeEval(`(() => {
         return ${configRaw[1]};
-
       })`)()
     }
-
     if(!config){
       throw new Error(`Axios options was not found on 'source' parameter.`)
     }
 
     console.log(config);
-    const result = await axios.request({
-      ...config,
-      transformResponse: x => x
-    });
+    let lastError = null;
+    const fetch = async () => {
+      const result = await axios.request({
+        ...config,
+        transformResponse: x => x
+      });
 
-    setVariable('body', result.data, false, true);
-    setVariable('status', result.status.toString(), false, true);
-    setVariable('statusText', result.statusText, false, true);
-    setVariable('headers', JSON.stringify(result.headers), false, true);
+      if(poolingUntil && !validateResponse(result, poolingUntil)) return false;
 
-    setVariable(`${outPrefix}BODY`, result.data);
-    setVariable(`${outPrefix}STATUS`, result.status.toString());
-    setVariable(`${outPrefix}STATUSTEXT`, result.statusText);
-    setVariable(`${outPrefix}HEADERS`, JSON.stringify(result.headers));
+      setVariable('body', result.data, false, true);
+      setVariable('status', result.status.toString(), false, true);
+      setVariable('statusText', result.statusText, false, true);
+      setVariable('headers', JSON.stringify(result.headers), false, true);
 
-  }
-  catch (err: any) {
+      setVariable(`${outPrefix}BODY`, result.data);
+      setVariable(`${outPrefix}STATUS`, result.status.toString());
+      setVariable(`${outPrefix}STATUSTEXT`, result.statusText);
+      setVariable(`${outPrefix}HEADERS`, JSON.stringify(result.headers));
+
+      return true;
+    }
+
+    if(poolingRetries && poolingUntil){
+      for (let r = 0; r < poolingRetries; r++) {
+        try {
+          await sleep(poolingDelay);
+          if(await fetch()) {
+            lastError = null;
+            break;
+          }
+        } catch (error) {
+          lastError = {...error};
+        }
+      }
+      if(lastError) throw lastError;
+    } else {
+      await fetch();
+    }
+
+
+  } catch (err: any) {
     setResult(TaskResult.Failed, err.message);
     // _debug(err);
     console.debug(err?.response?.data);

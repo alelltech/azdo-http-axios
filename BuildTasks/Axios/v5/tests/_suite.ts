@@ -3,7 +3,7 @@ import * as path from "path";
 
 import { MockTestRunner } from "azure-pipelines-task-lib/mock-test";
 import { mkdirSync, rmSync } from "fs";
-import { EXT, getRuntimePath } from "../../../Common/v5/RuntimeUtil";
+import { EXT, getRuntimePath } from "@alell/azure-pipelines-task-commons";
 
 
 
@@ -59,5 +59,27 @@ describe(`Axios Suite`, () => {
     assert(runner.stdout.match(/##vso\[task.setvariable variable=status[^\]]+\]200/), "should have setvariable expression of 'status' with '200'.")
     assert(runner.stdout.match(/##vso\[task.setvariable variable=statusText[^\]]+\]OK/), "should have setvariable expression of 'statusText' with 'OK'.")
     assert(runner.stdout.match(/##vso\[task.setvariable variable=headers[^\]]+\]{}/), "should have setvariable expression of 'headers' with '{}'.")
+  });
+
+  it("L1 retry 3 times from jq expresion", async function () {
+    this.timeout(parseInt(process.env.TASK_TEST_TIMEOUT ?? '20000'));
+    const testPath = path.join(__dirname, `L1.retry-jq.${EXT}`)
+    const runner: MockTestRunner = new MockTestRunner(testPath);
+    runner.nodePath = getRuntimePath(runner.nodePath);
+    runner.run();
+
+    runner.stderr = runner.stderr.replace('Debugger attached.\nWaiting for the debugger to disconnect...\n', '');
+
+    assert(runner.invokedToolCount == 0, "should have not invocation tools: " + runner.invokedToolCount);
+    assert(runner.stderr.length == 0, "should not have written to stderr=" + runner.stderr);
+    assert(runner.succeeded, "task should have succeeded");
+    assert(runner.warningIssues.length == 0, "task should have no warnings.");
+
+    const expectedBodyResult = JSON.stringify({"data":[{"foo":{"bar":"bad_value"}}]});
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=body[^\]]+\]/), `should have setvariable expression of 'body' with '${expectedBodyResult}'.`)
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=status[^\]]+\]200/), "should have setvariable expression of 'status' with '200'.")
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=statusText[^\]]+\]OK/), "should have setvariable expression of 'statusText' with 'OK'.")
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=headers[^\]]+\]{}/), "should have setvariable expression of 'headers' with '{}'.")
+    assert(runner.stdout.match(/##vso\[task.setvariable variable=INSOMNIA_RES_BODY[^\]]+\]/), `should have setvariable expression of 'INSOMNIA_RES_BODY' with '${expectedBodyResult}'.`)
   });
 })

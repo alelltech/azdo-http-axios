@@ -10,9 +10,6 @@
     "forceConsistentCasingInFileNames": true
   },
   "files": [
-    "./Common/v5/Common.ts",
-    "./Common/v5/ParamsUtil.ts",
-    "./Common/v5/RuntimeUtil.ts",
-    "./Common/v5/TaskLibUtils.ts"
+    "./Common/v5/Common.ts"
   ]
 }
