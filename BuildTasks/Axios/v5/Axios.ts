@@ -25,7 +25,7 @@ function sleep(millis: any) {
     });
 }
 
-function validateResponse(res: AxiosResponse, poolingUntil: string) {
+function validateResponse(res: AxiosResponse, pollingUntil: string) {
 
   const {
     data: dataRaw,
@@ -77,7 +77,7 @@ function validateResponse(res: AxiosResponse, poolingUntil: string) {
       })
     },
   }
-  const result = safeEval(poolingUntil, {
+  const result = safeEval(pollingUntil, {
     ...values,
     ...fn
   });
@@ -92,9 +92,9 @@ async function run() {
     const sourceType = getInput('sourceType', true) ?? '';
     const content = await getContent(sourceType as SourceType, source);
 
-    const poolingRetries = Number(getInput('poolingRetries', false) ?? '3');
-    const poolingUntil = (getInput('poolingUntil', false) as string || '');
-    const poolingDelay = Number(getInput('poolingDelay', false) as string || '100');
+    const pollingRetries = Number(getInput('pollingRetries', false) ?? '3');
+    const pollingUntil = (getInput('pollingUntil', false) as string || '');
+    const pollingDelay = Number(getInput('pollingDelay', false) as string || '100');
 
     const configRaw = /[var|let]+ [options|config]+ = (\{[^;]+\});/gm.exec(content);
     let config = {};
@@ -116,7 +116,7 @@ async function run() {
         transformResponse: x => x
       });
 
-      if(poolingUntil && !validateResponse(result, poolingUntil)) return false;
+      if(pollingUntil && !validateResponse(result, pollingUntil)) return false;
 
       setVariable('body', result.data, false, true);
       setVariable('status', result.status.toString(), false, true);
@@ -131,10 +131,10 @@ async function run() {
       return true;
     }
 
-    if(poolingRetries && poolingUntil){
-      for (let r = 0; r < poolingRetries; r++) {
+    if(pollingRetries && pollingUntil){
+      for (let r = 0; r < pollingRetries; r++) {
         try {
-          await sleep(poolingDelay);
+          await sleep(pollingDelay);
           if(await fetch()) {
             lastError = null;
             break;

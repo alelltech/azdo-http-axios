@@ -66,16 +66,16 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
         ...
 
   - task: Axios@4
-    name: pooling
-    displayName: "Axios Request Pooling"
+    name: polling
+    displayName: "Axios Request Polling"
     inputs:
-      poolingRetries: 2
-      poolingDelay: 500
+      pollingRetries: 2
+      pollingDelay: 500
       # you can also use annother helper functions like:
       #   jq() for JSONPath on JSON reponse
       #   xq() for JSONPath on XML reponse
       #   yq() for JSONPath on YAML reponse
-      poolingUntil: |
+      pollingUntil: |
         jq('.body.data..foo.bar')[0] === 'good_value'
       variablePrefix: INSOMNIA_RES_
       source: |
@@ -91,13 +91,13 @@ Build your Request from `Insomnia` or `Postman` and send via `source` input.
 ```
 
 
-## Activating pooling
+## Activating polling
 
-> Set `poolingUntil` and `poolingRetries` to activate **pooling**.
+> Set `pollingUntil` and `pollingRetries` to activate **polling**.
 
-### Pooling Until
+### Polling Until
 
-`ECMAScript` expression to stop pooling, see [safe-eval](https://www.npmjs.com/package/safe-eval).
+`ECMAScript` expression to stop polling, see [safe-eval](https://www.npmjs.com/package/safe-eval).
 
 You can also use helper functions to query **body** response with [JSONPath-plus](https://www.npmjs.com/package/jsonpath-plus)
 

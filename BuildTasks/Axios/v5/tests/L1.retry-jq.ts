@@ -8,8 +8,8 @@ setIn({
   variablePrefix: 'INSOMNIA_RES_',
   source: mockInsomnia,
   sourceType: 'text',
-  poolingRetries: 3,
-  poolingCondition: [
+  pollingRetries: 3,
+  pollingCondition: [
     `jq('.body.data..foo.bar')[0] === 'bad_value' `
   ].join('\n')
 })
