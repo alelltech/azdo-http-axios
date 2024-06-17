@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/vss-extension.json",
   "manifestVersion": 1,
   "id": "axios-http-request",
-  "version": "5.1.0",
+  "version": "5.1.1",
   "name": "Axios Http Request",
   "description": "Http Request from some libs like Axios",
   "publisher": "alelltech",
