@@ -9,7 +9,7 @@ setIn({
   source: mockInsomnia,
   sourceType: 'text',
   poolingRetries: 3,
-  poolingUntil: [
+  poolingCondition: [
     `jq('.body.data..foo.bar')[0] === 'bad_value' `
   ].join('\n')
 })

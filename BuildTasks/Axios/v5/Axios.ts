@@ -1,3 +1,7 @@
+import { SourceType, getContent } from '@alell/azure-pipelines-task-commons';
+import { fixQuery } from '@alell/jsonpath-plus-q';
+import axios, { AxiosResponse } from 'axios';
+import { _debug } from 'azure-pipelines-task-lib/internal';
 import {
   TaskResult,
   getInput,
@@ -5,16 +9,11 @@ import {
   setResult,
   setVariable,
 } from 'azure-pipelines-task-lib/task';
-import axios, { Axios, AxiosResponse } from 'axios';
-import { isCommon as _isCommon } from '../../Common/v5/Common'
-import { SourceType, getContent } from '@alell/azure-pipelines-task-commons'
-import { _debug } from 'azure-pipelines-task-lib/internal';
-import axiosRetry from 'axios-retry';
+import * as yaml from 'js-yaml';
+import { JSONPath } from 'jsonpath-plus';
 import * as safeEval from 'safe-eval';
-import { JSONPath } from 'jsonpath-plus'
-import * as yaml from 'js-yaml'
 import { xml2js } from 'xml-js';
-import { fixQuery } from '@alell/jsonpath-plus-q';
+import { isCommon as _isCommon } from '../../Common/v5/Common'
 
 function safePath(path: string ) {
 
