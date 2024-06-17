@@ -9,8 +9,8 @@
   "author": "alelltech",
   "version": {
     "Major": 5,
-    "Minor": 0,
-    "Patch": 3
+    "Minor": 1,
+    "Patch": 0
   },
   "instanceNameFormat": "Axios",
   "inputs": [
@@ -57,7 +57,7 @@
       "required": false,
       "defaultValue": "0",
       "type": "int",
-      "helpMarkDown": "# Activate pooling\nNumber of `pooling Retries` for non valid responses.\n> Set to `0` **if NO want pooling**."
+      "helpMarkDown": "Number of `pooling Retries` for non valid responses.\n> Set to `0` **if NO want pooling**.\nSee [Activating Pooling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-pooling)"
     },
     {
       "name": "poolingUntil",
@@ -65,7 +65,11 @@
       "required": false,
       "defaultValue": "0",
       "type": "string",
-      "helpMarkDown": "# Activate pooling\nECMAScript pooling expression to stop pooling.\n> Set to `empty` **if NO want pooling**."
+      "helpMarkDown": "ECMAScript pooling expression to stop pooling.\n> Set to `empty` **if NO want pooling**.\nSee [Activating Pooling](https://github.com/alelltech/azdo-http-axios?tab=readme-ov-file#activating-pooling)",
+      "properties": {
+        "rows": "4",
+        "resizable": true
+      }
     },
     {
       "name": "poolingDelay",

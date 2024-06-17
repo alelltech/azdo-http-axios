@@ -1,6 +1,6 @@
 {
   "name": "http-axios-extension",
-  "version": "5.0.3",
+  "version": "5.1.0",
   "scripts": {
     "debug": "ts-node ",
     "new:task": "ts-node .scripts/new-task.ts",
